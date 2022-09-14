@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title>Simple Calculator using HTML, CSS and JavaScript</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div id="results-container">
+        <input class="display-box" type="text" id="previous" disabled value="6000 + 6200"/>
+        <input class="display-box" type="text" id="result" disabled value="12,200"/>
+    </div>
+
+    <table class="calculator">
+        <tr>
+            <!-- clearScreen() function clears all the values -->
+            <td> <input class="btn operator" type="button" value="C" id="clear" /> </td>
+            <td> <input class="btn operator" type="button" value="( )"/> </td>
+            <td> <input class="btn operator" type="button" value="%"/> </td>
+            <td> <input class="btn operator" type="button" value="/"/> </td>
+        </tr>
+        <tr>
+            <td> <input class="btn number" type="button" value="7"/> </td>
+            <td> <input class="btn number" type="button" value="8"/> </td>
+            <td> <input class="btn number" type="button" value="9"/> </td>
+            <td> <input class="btn operator" type="button" value="x"/> </td>
+        </tr>
+        <tr>
+            <td> <input class="btn number" type="button" value="4"/> </td>
+            <td> <input class="btn number" type="button" value="5"/> </td>
+            <td> <input class="btn number" type="button" value="6"/> </td>
+            <td> <input class="btn operator" type="button" value="-"/> </td>
+        </tr>
+        <tr>
+            <!-- display() function displays the value of clicked button -->
+            <td> <input class="btn number" type="button" value="1"/> </td>
+            <td> <input class="btn number" type="button" value="2"/> </td>
+            <td> <input class="btn number" type="button" value="3"/> </td>
+            <td> <input class="btn operator" type="button" value="+"/> </td>
+        </tr>
+        <tr>
+            <td> <input class="btn number" type="button" value="0"/> </td>
+            <td> <input class="btn number" type="button" value="."/> </td>
+            
+            <!-- calculate() function evaluates the mathematical expression -->
+            <td colspan="2"> <input class="btn" type="button" value="=" id="equal" /> </td>
+        </tr>
+    </table>
+
+    <script type="text/javascript" src="main.js"></script>
+
+</body>
+
+</html>
