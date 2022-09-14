@@ -6,6 +6,7 @@
     font-family: Inter;
     font-size: 1rem;
     font-weight: 900;
+    transition: all 0.5s ease;
 }
 
 body {
@@ -13,40 +14,37 @@ body {
     width: 100vw;
     display: flex;
     background-color: #111320;
-    display: flex;
-    flex-direction: column;
-}
-
-.calculator {
-    height: 100%;
-    width: 100%;
-    padding: 1rem;
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
-}
-
-#results-container {
-    height: 100%;
-    padding: 0 1rem;
-    display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    align-items: flex-end;
+    align-items: center;
+    max-height: 100vh;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: end;
+    padding-bottom: 3rem;
+}
+
+.results-container {
+    width: 100%;
+    padding: 1rem 0;
+    display: flex;
+    flex-direction: column;
+
 }
 
 .display-box{
-    width: -webkit-fill-available;
-    background-color: #111320;
-    border: none;
+    display: flex;
+    justify-content: right;
+    align-items: flex-end;
     color: white;
-    text-align: end;
-    padding: 0 1rem;
-    outline: none;
+    text-align: right;
 }
 
 #result {
-    color: #fff;
     height: 5rem;
     font-weight: 900;
     font-size: 3rem;
@@ -58,32 +56,34 @@ body {
     color: #aaaaaa;
 }
 
-td {
-    padding: 0.4rem;
+.buttons-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 1.5rem;
+}
+
+.row {
+    display: flex;
+    gap: 1rem;
 }
 
 .btn {
-    font-size: 1.5rem;
-    width: 4rem;
-    height: 4rem;
-    padding: 1rem;
-    padding-left: calc(1rem - 2px);
-    padding-top: calc(1rem + 2px);
-    border-radius: 1rem;
+    font-size: calc(100vw / 15);
+    width: calc((100vw / 4) - 2rem);
+    height: calc((100vw / 4) - 2rem);
+    border-radius: calc(100vw / 20);
     border: none;
     outline: none;
-    background-color: #1a2035;
-    background: radial-gradient(hsl(227, 34%, 20%),hsl(227, 34%, 15%)); 
-    border-top: 2px solid rgba(255, 255, 255, 0.1);
-    border-left: 2px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
     transition: all 0.1s ease-out;
+    background-color: #1b2034;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5), inset 3px 3px 4px rgba(255, 255, 255, 0.1);
 }
 
 .btn:active {
-    background-color: hsl(227, 34%, 20%);
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-    transform: scale(0.95);
+    background-color: hsl(228, 32%, 20%);
+    transform: scale(0.98);
 }
 
 .number {
@@ -92,10 +92,14 @@ td {
 
 #equal {
     background-color: #ff6422;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5), inset 3px 3px 4px rgba(255, 255, 255, 0.3);
     color: white;
-    width: 100%;
-    border-top: 2px solid rgba(255, 255, 255, 0.3);
-    border-left: 2px solid rgba(255, 255, 255, 0.3);
+    width: calc((100vw / 2) - 3rem);
+}
+
+#equal:active {
+    background-color: hsl(18, 100%, 62%);
+    transform: scale(0.98);
 }
 
 #clear {
@@ -105,3 +109,47 @@ td {
 .operator {
     color: white;
 }
+
+@media screen and (min-width: 600px) {
+    .btn {
+        font-size: calc(100vh / 30);
+        width: calc((100vh / 7) - 2rem);
+        height: calc((100vh / 7) - 2rem);
+        border-radius: calc(100vh / 35);
+    }
+
+    #equal {
+        width: calc((100vh / 7) * 2 - 3rem);
+    }
+
+    @media screen and (max-height: 600px) {
+        body {
+            width: 100vw;
+        }
+        .container {
+            width: 80%;
+            flex-direction: row;
+            align-items: flex-start;
+            padding-bottom: 2rem;
+        }
+        
+        .display-box {
+            justify-content: flex-start;
+            align-items: flex-start;
+            padding: 0 1rem;
+        }
+
+        .btn {
+            font-size: calc(100vh / 20);
+            width: calc((100vh / 5) - 2rem);
+            height: calc((100vh / 5) - 2rem);
+            border-radius: calc(100vh / 25);
+        }
+
+        #equal {
+            width: calc((100vh / 5) * 2 - 3rem);
+        }
+        
+    }
+}
+    
