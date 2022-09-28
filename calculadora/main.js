@@ -38,6 +38,7 @@ function calculate() {
   if (equation == "") {
     equation = previousBox.innerHTML;
   }
+  let result = eval(equation);
 
   previousBox.innerHTML = equation;
   resultBox.innerHTML = result;
