@@ -32,6 +32,12 @@ h1 {
     font-weight: 900;
 }
 
+ul { 
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
 a {
     text-decoration: none;
     font-size: 1.5rem;
@@ -39,9 +45,9 @@ a {
     padding: 1rem;
     border-radius: 1rem;
     background: linear-gradient(145deg, #31313c, #292932);
-    box-shadow: 10px 10px 15px #202027, -10px -10px 15px #3c3c49;
+    box-shadow: 5px 5px 5px #202027, -5px -5px 5px #3c3c49, inset 5px 5px 5px #3c3c49, inset -5px -5px 5px #202027;
 }
 
 a::before {
-    content: "🔢 ";
+    content: attr(icon) " ";
 }

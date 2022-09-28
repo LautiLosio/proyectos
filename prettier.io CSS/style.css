@@ -1,0 +1,220 @@
+:root {
+  --bg: #1a2b34;
+  --grey: #334651;
+  --red: #ea5e5e;
+  --yellow: #f7ba3e;
+  --green: #56b3b4;
+  --purple: #bc85bc;
+  --unit: 10px;
+}
+
+body {
+  background-color: var(--bg);
+  margin: 0;
+}
+
+.container {
+  /* padding-top: 5rem; */
+  position: relative;
+  margin: 5rem auto;
+  width: 690px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--unit);
+  overflow: hidden;
+}
+
+.container:hover {
+  cursor: pointer;
+}
+
+/* .container:hover .row {
+  right: 0;
+} */
+
+.row {
+  display: flex;
+  height: var(--unit);
+  gap: var(--unit);
+  justify-content: center;
+  position: relative;
+}
+
+.row:nth-child(1) {
+  --dealy: 1;
+  right: 0;
+  --offset: 20px;
+}
+.row:nth-child(2) {
+  --dealy: 2;
+  right: -15px;
+  --offset: -50px;
+}
+.row:nth-child(3) {
+  --dealy: 3;
+  right: -60px;
+  --offset: 70px;
+}
+.row:nth-child(4) {
+  --dealy: 4;
+  right: 0;
+  --offset: -60px;
+}
+.row:nth-child(5) {
+  --dealy: 5;
+  right: -10px;
+  --offset: 110px;
+}
+.row:nth-child(6) {
+  --dealy: 6;
+  right: 30px;
+  --offset: -80px;
+}
+.row:nth-child(7) {
+  --dealy: 7;
+  right: -5px;
+  --offset: 20px;
+}
+.row:nth-child(8) {
+  --dealy: 8;
+  right: -5px;
+  --offset: -60px;
+}
+.row:nth-child(9) {
+  --dealy: 9;
+  right: -20px;
+  --offset: 70px;
+}
+.row:nth-child(10) {
+  --dealy: 10;
+  right: 0;
+  --offset: -100px;
+}
+.row:nth-child(11) {
+  --dealy: 11;
+  right: 10px;
+  --offset: 90px;
+}
+.row:nth-child(12) {
+  --dealy: 12;
+  right: 40px;
+  --offset: -30px;
+}
+.row:nth-child(13) {
+  --dealy: 13;
+  right: 20px;
+  --offset: 40px;
+}
+
+.row {
+  translate: var(--offset);
+  /* animation: anim-out 500ms calc(var(--dealy) * 80ms + 300ms) ease forwards; */
+}
+
+.container.out .row {
+  animation: anim-out 500ms calc(var(--dealy) * 80ms) ease backwards;
+}
+
+.container.in .row {
+  animation: anim-in 500ms calc(var(--dealy) * 80ms + 300ms) ease forwards;
+}
+
+@keyframes anim-in {
+  100% {
+    translate: 0;
+  }
+}
+
+@keyframes anim-out {
+  0% {
+    translate: 0;
+  }
+  100% {
+    translate: var(--offset);
+  }
+}
+
+.cell {
+  width: calc(var(--size, 2) * var(--unit));
+  height: var(--unit);
+  background-color: var(--grey);
+  border-radius: var(--unit);
+}
+
+.cell.size-1 {
+  --size: 1;
+}
+.cell.size-2 {
+  --size: 2;
+}
+.cell.size-3 {
+  --size: 3;
+}
+.cell.size-4 {
+  --size: 4;
+}
+.cell.size-5 {
+  --size: 5;
+}
+.cell.size-6 {
+  --size: 6;
+}
+.cell.size-7 {
+  --size: 7;
+}
+.cell.size-8 {
+  --size: 8;
+}
+.cell.size-9 {
+  --size: 9;
+}
+.cell.size-10 {
+  --size: 10;
+}
+.cell.size-11 {
+  --size: 11;
+}
+.cell.size-12 {
+  --size: 12;
+}
+.cell.size-13 {
+  --size: 13;
+}
+.cell.size-14 {
+  --size: 14;
+}
+.cell.size-15 {
+  --size: 15;
+}
+.cell.size-16 {
+  --size: 16;
+}
+.cell.size-17 {
+  --size: 17;
+}
+.cell.size-18 {
+  --size: 18;
+}
+.cell.size-19 {
+  --size: 19;
+}
+.cell.size-20 {
+  --size: 20;
+}
+
+.gray {
+  background-color: var(--grey);
+}
+.red {
+  background-color: var(--red);
+}
+.yellow {
+  background-color: var(--yellow);
+}
+.green {
+  background-color: var(--green);
+}
+.purple {
+  background-color: var(--purple);
+}

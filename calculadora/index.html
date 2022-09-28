@@ -11,14 +11,14 @@
 <body>
     <div class="container">
         <div class="results-container">
-            <span class="display-box" type="text" id="previous" disabled>6000 + 6200</span>
-            <span class="display-box" type="text" id="result" disabled>12,200</span>
+            <span class="display-box" type="number" id="previous" disabled>6000 + 6200</span>
+            <span class="display-box" type="number" id="result" disabled>12200</span>
         </div>
 
         <div class="buttons-container">
             <div class="row">
                 <!-- clearScreen() function clears all the values -->
-                <input class="btn operator" type="button" value="C" id="clear" />
+                <input class="btn operator clear" type="button" value="C"/>
                 <input class="btn operator" type="button" value="( )" />
                 <input class="btn operator" type="button" value="%" />
                 <input class="btn operator" type="button" value="/" />
@@ -27,7 +27,7 @@
                 <input class="btn number" type="button" value="7" />
                 <input class="btn number" type="button" value="8" />
                 <input class="btn number" type="button" value="9" />
-                <input class="btn operator" type="button" value="x" />
+                <input class="btn operator" type="button" value="*" />
             </div>
             <div class="row">
                 <input class="btn number" type="button" value="4" />
@@ -45,7 +45,7 @@
             <div class="row">
                 <input class="btn number" type="button" value="0" />
                 <input class="btn number" type="button" value="." />
-                <input class="btn" type="button" value="=" id="equal" />
+                <input class="btn equal" type="button" value="="/>
             </div>
         </div>
 

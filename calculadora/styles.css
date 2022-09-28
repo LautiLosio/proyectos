@@ -1,5 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
 
+:root{
+    --btn-size: 4rem;
+    --gap: calc(var(--btn-size) * 0.25);
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -42,12 +47,14 @@ body {
     align-items: flex-end;
     color: white;
     text-align: right;
+    max-width: 100%;
 }
 
 #result {
     height: 5rem;
     font-weight: 900;
     font-size: 3rem;
+    
 }
 
 #previous {
@@ -61,19 +68,19 @@ body {
     flex-direction: column;
     align-items: flex-end;
     justify-content: center;
-    gap: 1.5rem;
+    gap: var(--gap);
 }
 
 .row {
     display: flex;
-    gap: 1rem;
+    gap: var(--gap);
 }
 
 .btn {
-    font-size: calc(100vw / 15);
-    width: calc((100vw / 4) - 2rem);
-    height: calc((100vw / 4) - 2rem);
-    border-radius: calc(100vw / 20);
+    font-size: calc(var(--btn-size) * 0.4);
+    width: var(--btn-size);
+    height: var(--btn-size);
+    border-radius: calc(var(--btn-size) * 0.2);
     border: none;
     outline: none;
     background-color: #1b2034;
@@ -81,27 +88,31 @@ body {
 }
 
 .btn:active {
-    background-color: hsl(228, 32%, 20%);
-    transform: scale(0.98);
+    background-color: hsl(228, 35%, 20%);
+    transform: scale(0.95);
+}
+
+.btn:hover {
+  cursor: pointer;
 }
 
 .number {
     color: #aaaaaa;
 }
 
-#equal {
+.equal {
     background-color: #ff6422;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5), inset 3px 3px 4px rgba(255, 255, 255, 0.3);
     color: white;
-    width: calc((100vw / 2) - 3rem);
+    width: calc(var(--btn-size) * 2 + calc(var(--btn-size) / 4));
 }
 
-#equal:active {
+.equal:active {
     background-color: hsl(18, 100%, 62%);
     transform: scale(0.98);
 }
 
-#clear {
+.btn.clear {
     color: #ff6422;
 }
 
@@ -110,7 +121,11 @@ body {
 }
 
 @media screen and (min-width: 600px) {
-    .btn {
+    :root {
+        --btn-size: 5rem;
+    }
+
+    /* .btn {
         font-size: calc(100vh / 30);
         width: calc((100vh / 7) - 2rem);
         height: calc((100vh / 7) - 2rem);
@@ -119,12 +134,13 @@ body {
 
     #equal {
         width: calc((100vh / 7) * 2 - 3rem);
-    }
+    } */
 
     @media screen and (max-height: 600px) {
-        body {
-            width: 100vw;
+        :root {
+            --btn-size: 3rem;
         }
+
         .container {
             width: 80%;
             flex-direction: row;
@@ -138,7 +154,7 @@ body {
             padding: 0 1rem;
         }
 
-        .btn {
+        /* .btn {
             font-size: calc(100vh / 20);
             width: calc((100vh / 5) - 2rem);
             height: calc((100vh / 5) - 2rem);
@@ -147,7 +163,7 @@ body {
 
         #equal {
             width: calc((100vh / 5) * 2 - 3rem);
-        }
+        } */
         
     }
 }
