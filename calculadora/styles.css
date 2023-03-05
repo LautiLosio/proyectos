@@ -1,95 +1,101 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
 
-:root{
-    --btn-size: 4rem;
-    --gap: calc(var(--btn-size) * 0.25);
+:root {
+  --btn-size: 4rem;
+  --gap: calc(var(--btn-size) * 0.25);
+}
+
+:focus {
+  transition: none;
+  outline: 2px solid hsl(232, 31%, 50%);
+  outline-offset: 3px;
 }
 
 * {
-    margin: 0;
-    padding: 0;
-    font-family: Inter;
-    font-size: 1rem;
-    font-weight: 900;
-    transition: all 0.5s ease;
+  margin: 0;
+  padding: 0;
+  font-family: Inter;
+  font-size: 1rem;
+  font-weight: 900;
+  transition: all 0.5s ease;
 }
 
 body {
-    height: 100vh;
-    width: 100vw;
-    display: flex;
-    background-color: #111320;
-    flex-direction: column;
-    justify-content: flex-end;
-    align-items: center;
-    max-height: 100vh;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  background-color: #111320;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  max-height: 100vh;
 }
 
 .container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: end;
-    padding-bottom: 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: end;
+  padding-bottom: 3rem;
 }
 
 .results-container {
-    width: 100%;
-    padding: 1rem 0;
-    display: flex;
-    flex-direction: column;
+  width: 100%;
+  padding: 1rem 0;
+  display: flex;
+  flex-direction: column;
 
 }
 
-.display-box{
-    display: flex;
-    justify-content: right;
-    align-items: flex-end;
-    color: white;
-    text-align: right;
-    max-width: 100%;
+.display-box {
+  display: flex;
+  justify-content: right;
+  align-items: flex-end;
+  color: white;
+  text-align: right;
+  max-width: 100%;
 }
 
 #result {
-    height: 5rem;
-    font-weight: 900;
-    font-size: 3rem;
-    
+  height: 5rem;
+  font-weight: 900;
+  font-size: 3rem;
+
 }
 
 #previous {
-    height: 3rem;
-    font-size: 1.5rem;
-    color: #aaaaaa;
+  height: 3rem;
+  font-size: 1.5rem;
+  color: #aaaaaa;
 }
 
 .buttons-container {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    justify-content: center;
-    gap: var(--gap);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  gap: var(--gap);
 }
 
 .row {
-    display: flex;
-    gap: var(--gap);
+  display: flex;
+  gap: var(--gap);
 }
 
 .btn {
-    font-size: calc(var(--btn-size) * 0.4);
-    width: var(--btn-size);
-    height: var(--btn-size);
-    border-radius: calc(var(--btn-size) * 0.2);
-    border: none;
-    outline: none;
-    background-color: #1b2034;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5), inset 3px 3px 4px rgba(255, 255, 255, 0.1);
+  font-size: calc(var(--btn-size) * 0.4);
+  width: var(--btn-size);
+  height: var(--btn-size);
+  border-radius: calc(var(--btn-size) * 0.2);
+  border: none;
+  outline: none;
+  background-color: #1b2034;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5), inset 3px 3px 4px rgba(255, 255, 255, 0.1);
 }
 
 .btn:active {
-    background-color: hsl(228, 35%, 20%);
-    transform: scale(0.95);
+  background-color: hsl(228, 35%, 20%);
+  transform: scale(0.95);
 }
 
 .btn:hover {
@@ -97,35 +103,35 @@ body {
 }
 
 .number {
-    color: #aaaaaa;
+  color: #aaaaaa;
 }
 
 .equal {
-    background-color: #ff6422;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5), inset 3px 3px 4px rgba(255, 255, 255, 0.3);
-    color: white;
-    width: calc(var(--btn-size) * 2 + calc(var(--btn-size) / 4));
+  background-color: #ff6422;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5), inset 3px 3px 4px rgba(255, 255, 255, 0.3);
+  color: white;
+  width: calc(var(--btn-size) * 2 + calc(var(--btn-size) / 4));
 }
 
 .equal:active {
-    background-color: hsl(18, 100%, 62%);
-    transform: scale(0.98);
+  background-color: hsl(18, 100%, 62%);
+  transform: scale(0.98);
 }
 
 .btn.clear {
-    color: #ff6422;
+  color: #ff6422;
 }
 
 .operator {
-    color: white;
+  color: white;
 }
 
 @media screen and (min-width: 600px) {
-    :root {
-        --btn-size: 5rem;
-    }
+  :root {
+    --btn-size: 5rem;
+  }
 
-    /* .btn {
+  /* .btn {
         font-size: calc(100vh / 30);
         width: calc((100vh / 7) - 2rem);
         height: calc((100vh / 7) - 2rem);
@@ -136,25 +142,25 @@ body {
         width: calc((100vh / 7) * 2 - 3rem);
     } */
 
-    @media screen and (max-height: 600px) {
-        :root {
-            --btn-size: 3rem;
-        }
+  @media screen and (max-height: 600px) {
+    :root {
+      --btn-size: 3rem;
+    }
 
-        .container {
-            width: 80%;
-            flex-direction: row;
-            align-items: flex-start;
-            padding-bottom: 2rem;
-        }
-        
-        .display-box {
-            justify-content: flex-start;
-            align-items: flex-start;
-            padding: 0 1rem;
-        }
+    .container {
+      width: 80%;
+      flex-direction: row;
+      align-items: flex-start;
+      padding-bottom: 2rem;
+    }
 
-        /* .btn {
+    .display-box {
+      justify-content: flex-start;
+      align-items: flex-start;
+      padding: 0 1rem;
+    }
+
+    /* .btn {
             font-size: calc(100vh / 20);
             width: calc((100vh / 5) - 2rem);
             height: calc((100vh / 5) - 2rem);
@@ -164,7 +170,17 @@ body {
         #equal {
             width: calc((100vh / 5) * 2 - 3rem);
         } */
-        
-    }
+
+  }
 }
-    
+
+.back {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  font-size: 1.5rem;
+  font-weight: 900;
+  text-decoration: none;
+  border-radius: 2px;
+  padding: 0.5rem;
+}

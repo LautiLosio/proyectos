@@ -24,7 +24,6 @@ function clearScreen() {
 function display(value) {
   const resultBox = document.getElementById("result");
   resultBox.innerHTML += value;
-  console.log(value);
 }
 
 const formatter = new Intl.NumberFormat('es-AR');
@@ -43,3 +42,70 @@ function calculate() {
   previousBox.innerHTML = equation;
   resultBox.innerHTML = result;
 }
+
+document.addEventListener("keydown", (e) => {
+  const key = e.key;
+  console.log(key);
+  const allowedKeys = [
+    "0",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "+",
+    "-",
+    "*",
+    "/",
+    ".",
+    "Backspace",
+    "Enter",
+    "Escape",
+  ];
+  if (allowedKeys.includes(key)) {
+    switch (e.key) {
+      case "Backspace":
+        clearScreen();
+        break;
+      case "Enter":
+        calculate();
+        break;
+      case "Escape":
+        clearScreen();
+        break;
+      default:
+        display(e.key);
+        break;
+    }
+  }
+} );
+
+// prevent the user from entering any other character except numbers and operators
+document.addEventListener("keypress", (e) => {
+  const key = e.key;
+  const allowedKeys = [
+    "0",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "+",
+    "-",
+    "*",
+    "/",
+    ".",
+  ];
+  if (!allowedKeys.includes(key)) {
+    e.preventDefault();
+  }
+} );
+

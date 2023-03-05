@@ -8,6 +8,12 @@
   --unit: 10px;
 }
 
+:focus {
+  transition: none;
+  outline: 2px solid var(--red);
+  outline-offset: 3px;
+}
+
 body {
   background-color: var(--bg);
   margin: 0;
@@ -217,4 +223,15 @@ body {
 }
 .purple {
   background-color: var(--purple);
+}
+
+.back {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  font-size: 1.5rem;
+  font-weight: 900;
+  text-decoration: none;
+  border-radius: 2px;
+  padding: 0.5rem;
 }
