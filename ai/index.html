@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <title>Document</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,700,1,200" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <section class="page">
+    <div class="container">
+      <canvas id="canvas"></canvas>
+      <div class="buttons">
+        <span class="material-symbols-rounded button" onclick="zoomOut(); setLowRes();">
+          home
+        </span>
+        <span class="material-symbols-rounded button" onclick="setTimeout(() => { setRes(2000); }, 500);">
+          2k
+        </span>
+        <span class="material-symbols-rounded button" onclick="setTimeout(() => { setRes(4000); }, 500);">
+          4k
+        </span>
+        <span class="material-symbols-rounded button" onclick="download()">
+          download
+        </span>
+      </div>
+    </div>
+  </section>
+  <script src="main.js"></script>
+</body>
+
+</html>
