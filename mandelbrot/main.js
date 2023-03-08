@@ -148,54 +148,119 @@ canvas.addEventListener("touchmove", (e) => {
   }
 });
 
-// set the resolution of the image 
+// set the resolution of the image
+let resolutionIndicator = document.getElementById("res");
 function setRes(res) {
   drawCount = 0;
   lowRes = true
+  resolutionIndicator.innerHTML = '';
+  resolutionIndicator.classList.remove('fade-out');
   width = canvas.width = height = canvas.height = res;
   if (res > 500) {
     lowRes = false;
+    if (res == 2000) {
+      resolutionIndicator.innerHTML = '2k';
+      resolutionIndicator.classList.add('fade-out');
+    } else if (res == 4000) {
+      resolutionIndicator.innerHTML = '4k';
+      resolutionIndicator.classList.add('fade-out');
+    }
   }
 }
 
 // zoom out smoothly and proportionally to the zoom
-function zoomOut() {
+function setPos(a, b, z) {
   setRes(300);
-  if (zoom > 0.3) {
-    zoom *= 0.99;
-    setTimeout(() => { zoomOut(); }, 10);
+  drawCount = 0;
+  //if the zoom is close enough to the target zoom, stop zooming and center the image
+  if (Math.abs(zoom - z) < 0.01 || drag) {
+    center(a, b);
+    return;
   }
-  else {
-    // when done zooming out, center the image
-    center();
+  if (zoom > z) {
+    zoom *= 0.99;
+    setTimeout(() => { setPos(a, b, z); }, 10);
+  }
+  else if (zoom < z) {
+    zoom /= 0.99;
+    setTimeout(() => { setPos(a, b, z); }, 10);
   }
 }
 
+function homeView() {
+  setPos(-0.5,0,0.3);
+}
+
 // center the image smoothly and proportionally to the zoom
-function center() {
-  if (x > -0.5) {
-    x -= 0.005 / zoom;
-  }
-  if (x < -0.5) {
-    x += 0.005 / zoom;
-  }
-  if (y > 0) {
-    y -= 0.005 / zoom;
-  }
-  if (y < 0) {
-    y += 0.005 / zoom;
-  }
-  // stop when the image is centered or user starts dragging
-  if (Math.abs(x + 0.5) < 0.01 && Math.abs(y) < 0.01 || drag) {
+function center(a, b) {
+  drawCount = 0;
+  //if the coordinates are close enough to the target coordinates, stop
+  if (Math.abs(x - a) < 0.01 / zoom && Math.abs(y - b) < 0.01 / zoom || drag) {
+    setRes(2000);
     return;
   }
-  setTimeout(() => { center(); }, 20);
+  if (x > a) {
+    x -= 0.005 / zoom;
+  }
+  if (x < a) {
+    x += 0.005 / zoom;
+  }
+  if (y > b) {
+    y -= 0.005 / zoom;
+  }
+  if (y < b) {
+    y += 0.005 / zoom;
+  }
+  setTimeout(() => { center(a, b); }, 20);
+}
+
+// go to a specific point and zoom
+function goTo(a, b, z) {
+  x = a;
+  y = b;
+  zoom = z;
+  setRes(2000);
+}
+
+// goto modal
+const modal = document.querySelector(".modal");
+const trigger = document.querySelector("#goToModal");
+const closeButton = document.querySelector(".close-button");
+
+function toggleModal() {
+    modal.classList.toggle("show-modal");
+}
+
+function windowOnClick(event) {
+    if (event.target === modal) {
+        toggleModal();
+    }
+}
+
+trigger.addEventListener("click", toggleModal);
+closeButton.addEventListener("click", toggleModal);
+window.addEventListener("click", windowOnClick);
+
+// goto button
+function modalGo() {
+  let coordsAndZoom = document.getElementById("coords").value;
+  let a = parseFloat(coordsAndZoom.split(",")[0]);
+  let b = parseFloat(coordsAndZoom.split(",")[1]);
+  let z = parseFloat(coordsAndZoom.split(",")[2]);
+  goTo(a, b, z);
+  toggleModal();
+}
+
+// copy coordinates to clipboard
+function copyCoords() {
+  let coords = x + "," + y + "," + zoom;
+  navigator.clipboard.writeText(coords);
 }
 
 // download the image
 function download() {
   let link = document.createElement("a");
-  link.download = "mandelbrot" + width + "px.png"
+  link.download = "mandelbrot_" + width + "px_coords" + "(" + x + "," + y + "," + zoom + ")" + ".png";
   link.href = canvas.toDataURL("image/png");
   link.click();
 }
