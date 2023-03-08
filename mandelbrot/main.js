@@ -27,7 +27,7 @@ function mandelbrot(c) {
 let drawCount = 0;
 function draw() {
   if (lowRes) {
-    if (drawCount < 10) {
+    if (drawCount < 1) {
       drawImage();
     }
     if (!drag) {
@@ -68,7 +68,6 @@ function drawImage() {
 
   }
   ctx.putImageData(imageData, 0, 0);
-  console.log("drawn at " + width + "x" + height);
 }
 
 
