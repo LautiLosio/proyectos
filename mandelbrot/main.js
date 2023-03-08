@@ -23,13 +23,22 @@ function mandelbrot(c) {
   return n;
 }
 
-// if the resolution is low, draw the image every frame, otherwise only draw it once
+// if the image is low resolution, draw it every frame, otherwise only draw it once
+let drawCount = 0;
 function draw() {
   if (lowRes) {
-    drawImage();
+    if (drawCount < 10) {
+      drawImage();
+    }
+    if (!drag) {
+      drawCount++;
+    }
   }
   else {
-    requestAnimationFrame(drawImage);
+    if (drawCount < 1) {
+      drawImage();
+    }
+    drawCount++;
   }
   requestAnimationFrame(draw);
 }
@@ -59,6 +68,7 @@ function drawImage() {
 
   }
   ctx.putImageData(imageData, 0, 0);
+  console.log("drawn at " + width + "x" + height);
 }
 
 
@@ -141,11 +151,10 @@ canvas.addEventListener("touchmove", (e) => {
 
 // set the resolution of the image 
 function setRes(res) {
+  drawCount = 0;
+  lowRes = true
   width = canvas.width = height = canvas.height = res;
-  if (res < 500) {
-    lowRes = true;
-  }
-  else {
+  if (res > 500) {
     lowRes = false;
   }
 }
@@ -154,8 +163,8 @@ function setRes(res) {
 function zoomOut() {
   setRes(300);
   if (zoom > 0.3) {
-  zoom *= 0.99;
-  setTimeout(() => { zoomOut(); }, 10);
+    zoom *= 0.99;
+    setTimeout(() => { zoomOut(); }, 10);
   }
   else {
     // when done zooming out, center the image
