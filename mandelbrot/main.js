@@ -218,9 +218,11 @@ function setRes(res) {
   if (res > 500) {
     lowRes = false;
     if (res == 2000) {
+      resolutionIndicator.classList.remove('fade-out');
       resolutionIndicator.innerHTML = '2k';
       resolutionIndicator.classList.add('fade-out');
     } else if (res == 4000) {
+      resolutionIndicator.classList.remove('fade-out');
       resolutionIndicator.innerHTML = '4k';
       resolutionIndicator.classList.add('fade-out');
     }
