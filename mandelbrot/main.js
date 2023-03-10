@@ -8,20 +8,27 @@ let lowRes = false;
 let x = -0.5;
 let y = 0;
 let zoom = 0.3;
-let max_iter = 50;
+let max_iter = 100;
 
 function mandelbrot(c) {
-  let z = {re: 0, im: 0};
-  let n = 0;
-  while (n < max_iter && z.re ** 2 + z.im ** 2 < 4) {
-    let re = z.re ** 2 - z.im ** 2 + c.re;
-    let im = 2 * z.re * z.im + c.im;
+  const z = {re: 0, im: 0};
+  let n;
+  const z_squared = z.re ** 2 + z.im ** 2;
+  for (n = 0; n < max_iter && z_squared < 4; n++) {
+    const re = z.re ** 2 - z.im ** 2 + c.re;
+    const im = 2 * z.re * z.im + c.im;
     z.re = re;
     z.im = im;
-    n++;
+    z_squared = z.re ** 2 + z.im ** 2;
   }
   return n;
 }
+
+ // -1.0219376394624373,0.3740627687849417,17269.51130098494
+  // draw: 16.168701171875 ms
+  // draw: 741.256103515625 ms
+  // draw: 2838.14990234375 ms
+  
 
 // if the image is low resolution, draw it every frame, otherwise only draw it once
 let drawCount = 0;
@@ -46,31 +53,85 @@ function draw() {
 // draw the image
 function drawImage() {
   let imageData = ctx.createImageData(width, height);
+  console.time("draw");
   for (let i = 0; i < width; i++) {
     for (let j = 0; j < height; j++) {
       let c = {
         re: (i / width - 0.5) / zoom + x,
         im: (j / height - 0.5) / zoom + y
       };
-      let n = mandelbrot(c);
+      let z = {re: 0, im: 0};
+      let n = 0;
+      while (n < max_iter && z.re ** 2 + z.im ** 2 < 4) {
+        let re = z.re ** 2 - z.im ** 2 + c.re;
+        let im = 2 * z.re * z.im + c.im;
+        z.re = re;
+        z.im = im;
+        n++;
+      }
+      let v = n + 1 - Math.log(Math.log2(z.re ** 2 + z.im ** 2)) / Math.log(2);
+      let colorR = 0;
+      let colorG = 0;
+      let colorB = 0;
 
-      let color = 0;
+      // render the image in a gradient from the color variable to black
+      // #f9ebd7 in rgb
+      // let color = {r: 249, g: 235, b: 215};
+      // if (n < max_iter) {
+      //   colorR = Math.floor(color.r * v / max_iter);
+      //   colorG = Math.floor(color.g * v / max_iter);
+      //   colorB = Math.floor(color.b * v / max_iter);
+      // }
+
+      // render the image in a gradient in a rainbow using the full color spectrum smoothly transitioning between colors
       if (n < max_iter) {
-        color = 255 * (n / max_iter);
+        let color = Math.floor(v / max_iter * 360);
+        if (color < 60) {
+          colorR = 255;
+          colorG = Math.floor(color / 60 * 255);
+          colorB = 0;
+        }
+        else if (color < 120) {
+          colorR = Math.floor((120 - color) / 60 * 255);
+          colorG = 255;
+          colorB = 0;
+        }
+        else if (color < 180) {
+          colorR = 0;
+          colorG = 255;
+          colorB = Math.floor((color - 120) / 60 * 255);
+        }
+        else if (color < 240) {
+          colorR = 0;
+          colorG = Math.floor((240 - color) / 60 * 255);
+          colorB = 255;
+        }
+        else if (color < 300) {
+          colorR = Math.floor((color - 240) / 60 * 255);
+          colorG = 0;
+          colorB = 255;
+        }
+        else {
+          colorR = 255;
+          colorG = 0;
+          colorB = Math.floor((360 - color) / 60 * 255);
+        }
       }
 
+
+
+
+
       let index = (i + j * width) * 4;
-      imageData.data[index + 0] = color;
-      imageData.data[index + 1] = color;
-      imageData.data[index + 2] = color;
+      imageData.data[index + 0] = colorR;
+      imageData.data[index + 1] = colorG;
+      imageData.data[index + 2] = colorB;
       imageData.data[index + 3] = 255;
     }
-
   }
+  console.timeEnd("draw");
   ctx.putImageData(imageData, 0, 0);
 }
-
-
 
 // controls
 // mouse wheel zoom
