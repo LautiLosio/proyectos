@@ -1,5 +1,6 @@
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
+localStorage.getItem("dark") == "true" ? toggleDarkMode() : null;
 
 let width = canvas.width = 2000;
 let height = canvas.height = 2000;
@@ -8,7 +9,13 @@ let lowRes = false;
 let x = -0.5;
 let y = 0;
 let zoom = 0.3;
-let max_iter = 100;
+let max_iter = 50;
+let rainbow = false;
+
+function toggleDarkMode() {
+  document.body.classList.toggle("dark");
+  localStorage.setItem("dark", document.body.classList.contains("dark"));
+}
 
 function mandelbrot(c) {
   const z = {re: 0, im: 0};
@@ -23,12 +30,6 @@ function mandelbrot(c) {
   }
   return n;
 }
-
- // -1.0219376394624373,0.3740627687849417,17269.51130098494
-  // draw: 16.168701171875 ms
-  // draw: 741.256103515625 ms
-  // draw: 2838.14990234375 ms
-  
 
 // if the image is low resolution, draw it every frame, otherwise only draw it once
 let drawCount = 0;
@@ -53,7 +54,6 @@ function draw() {
 // draw the image
 function drawImage() {
   let imageData = ctx.createImageData(width, height);
-  console.time("draw");
   for (let i = 0; i < width; i++) {
     for (let j = 0; j < height; j++) {
       let c = {
@@ -73,55 +73,53 @@ function drawImage() {
       let colorR = 0;
       let colorG = 0;
       let colorB = 0;
+      let color = {r: 255, g: 241, b: 221};
 
-      // render the image in a gradient from the color variable to black
-      // #f9ebd7 in rgb
-      // let color = {r: 249, g: 235, b: 215};
-      // if (n < max_iter) {
-      //   colorR = Math.floor(color.r * v / max_iter);
-      //   colorG = Math.floor(color.g * v / max_iter);
-      //   colorB = Math.floor(color.b * v / max_iter);
-      // }
-
-      // render the image in a gradient in a rainbow using the full color spectrum smoothly transitioning between colors
-      if (n < max_iter) {
-        let color = Math.floor(v / max_iter * 360);
-        if (color < 60) {
-          colorR = 255;
-          colorG = Math.floor(color / 60 * 255);
-          colorB = 0;
+      if (!rainbow) {
+        if (n < max_iter) {
+          colorR = Math.floor(color.r * v / max_iter);
+          colorG = Math.floor(color.g * v / max_iter);
+          colorB = Math.floor(color.b * v / max_iter);
         }
-        else if (color < 120) {
-          colorR = Math.floor((120 - color) / 60 * 255);
-          colorG = 255;
-          colorB = 0;
-        }
-        else if (color < 180) {
-          colorR = 0;
-          colorG = 255;
-          colorB = Math.floor((color - 120) / 60 * 255);
-        }
-        else if (color < 240) {
-          colorR = 0;
-          colorG = Math.floor((240 - color) / 60 * 255);
-          colorB = 255;
-        }
-        else if (color < 300) {
-          colorR = Math.floor((color - 240) / 60 * 255);
-          colorG = 0;
-          colorB = 255;
-        }
-        else {
-          colorR = 255;
-          colorG = 0;
-          colorB = Math.floor((360 - color) / 60 * 255);
+      } else {
+        // render the image in a gradient in a rainbow using the full color spectrum smoothly transitioning between colors
+        if (n < max_iter) {
+          let color = Math.floor(v / max_iter * 360);
+          if (color < 60) {
+            colorR = 255;
+            colorG = Math.floor(color / 60 * 255);
+            colorB = 0;
+          }
+          else if (color < 120) {
+            colorR = Math.floor((120 - color) / 60 * 255);
+            colorG = 255;
+            colorB = 0;
+          }
+          else if (color < 180) {
+            colorR = 0;
+            colorG = 255;
+            colorB = Math.floor((color - 120) / 60 * 255);
+          }
+          else if (color < 240) {
+            colorR = 0;
+            colorG = Math.floor((240 - color) / 60 * 255);
+            colorB = 255;
+          }
+          else if (color < 300) {
+            colorR = Math.floor((color - 240) / 60 * 255);
+            colorG = 0;
+            colorB = 255;
+          }
+          else {
+            colorR = 255;
+            colorG = 0;
+            colorB = Math.floor((360 - color) / 60 * 255);
+          }
         }
       }
 
 
-
-
-
+      // apply the color
       let index = (i + j * width) * 4;
       imageData.data[index + 0] = colorR;
       imageData.data[index + 1] = colorG;
@@ -129,9 +127,9 @@ function drawImage() {
       imageData.data[index + 3] = 255;
     }
   }
-  console.timeEnd("draw");
   ctx.putImageData(imageData, 0, 0);
 }
+  
 
 // controls
 // mouse wheel zoom
@@ -325,5 +323,43 @@ function download() {
   link.href = canvas.toDataURL("image/png");
   link.click();
 }
+
+// change max iterations
+let maxIterButton = document.getElementById("max-iter-button");
+let maxIter = document.getElementById("max-iter");
+maxIter.innerHTML = max_iter;
+maxIterButton.addEventListener("click", () => {
+  setTimeout(() => { 
+    maxIterations = parseInt(maxIter.innerHTML);
+    if (maxIterations == 50) {
+      maxIter.innerHTML = "100";
+      max_iter = 100;
+      drawCount = 0;
+    } else if (maxIterations == 100) {
+      maxIter.innerHTML = "200";
+      max_iter = 200;
+      drawCount = 0;
+    } else if (maxIterations == 200) {
+      maxIter.innerHTML = "500";
+      max_iter = 500;
+      drawCount = 0;
+    } else if (maxIterations == 500) {
+      maxIter.innerHTML = "1000";
+      max_iter = 1000;
+      drawCount = 0;
+    } else if (maxIterations == 1000) {
+      maxIter.innerHTML = "50";
+      max_iter = 50;
+      drawCount = 0;
+    }
+   }, 100);
+});
+
+// change color scheme
+function toggleRainbow() {
+  rainbow = !rainbow;
+  drawCount = 0;
+}
+
 
 draw();

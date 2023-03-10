@@ -1,8 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap');
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   user-select: none; 
+  transition: all 0.2s cubic-bezier(0.075, 0.82, 0.165, 1);
+  font-family: 'Space Mono', monospace;
 }
 
 input,
@@ -15,8 +19,9 @@ span {
 }
 
 body {
-  background: darkslategray;
+  background: hsl(25, 76%, 91%);
   overflow: hidden;
+  transition: all 0.2s ease-in-out;
 }
 
 .page {
@@ -46,16 +51,19 @@ body {
   width: 100%;
   justify-content: flex-start;
   align-items: center;
-  
+  gap: 1rem;  
+  padding: 1rem 0.1rem 1.5rem 0.1rem;
 }
 
 .button {
-  font-size: 3rem;
-  background-color: antiquewhite;
-  color: saddlebrown;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  background-color: darkslategray;
+  color: antiquewhite;
   border-radius: 50%;
   padding: 0.5rem;
-  margin: 0.5rem;
   cursor: pointer;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1), 0 4px 4px 0 rgba(0, 0, 0, 0.5), inset 0 2px 0px 0 rgba(255, 255, 255, 0.5);
   transition: all 0.2s cubic-bezier(0.075, 0.82, 0.165, 1);
@@ -66,6 +74,22 @@ body {
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.5), inset 0 2px 0px 0 rgba(255, 255, 255, 1);
 }
 
+#max-iter-button {
+  font-size: 1rem;
+  padding: 0.5rem;
+  max-height: 3rem;
+  aspect-ratio: 1/1;
+}
+
+.max-iter-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.8rem;
+  font-weight: 800;
+  line-height: 1rem;
+}
 
 canvas {
   display: flex;
@@ -88,7 +112,7 @@ canvas {
 #res {
   font-size: 3rem;
   color: white;
-  opacity: 0.2;
+  opacity: 0.3;
   text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2), 0px 0px 5px rgba(0, 0, 0, 0.5);
   transition: opacity 0.2s ease-in-out;
 }
@@ -109,7 +133,7 @@ canvas {
     opacity: 1;
   }
   100% {
-    opacity: 0.2;
+    opacity: 0.3;
   }
 }
 
@@ -121,18 +145,26 @@ canvas {
   }
 
   .buttons {
-    width: auto;
-    overflow: hidden;
-    flex-direction: column-reverse;
-    justify-content: center;
-    align-items: center;
-    align-self: flex-end;
-    padding-bottom: 5px;
+    flex-direction: column;
+    gap: 1rem;
+    width: fit-content;
+    padding: 1rem 1rem 1rem 1rem;
+    overflow-x: hidden;
+    overflow-y: auto;
   }
 
   .button {
-    font-size: 3rem;
+    font-size: 2rem;
     padding: 1rem;
+  }
+
+  #max-iter-button {
+    max-height: 4rem;
+  }
+
+  .max-iter-text {
+    font-size: 1rem;
+    line-height: 1.5rem;
   }
 }
 
@@ -230,4 +262,15 @@ canvas {
   visibility: visible;
   transform: scale(1);
   transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s;
+}
+
+/* dark mode */
+.dark {
+  background-color: darkslategray;
+  color: antiquewhite;
+}
+
+.dark .button {
+  background-color: antiquewhite;
+  color: saddlebrown;
 }
