@@ -1,0 +1,100 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: hsl(97, 40%, 27%);
+  color: #fff;
+  font-family: sans-serif;
+  font-size: 1.5rem;
+  text-align: center;
+  padding: 1rem;
+  background-image: url("data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 200%22><text y=%22.9em%22 font-size=%22100%22 rotate=%2245deg%22 opacity=%220.1%22>💵</text></svg>");
+  background-size: 200px 200px;
+  background-position: center;
+  animation: bgPan 10s linear infinite;
+  overflow: auto;
+}
+
+@keyframes bgPan {
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: 200px 200px;
+  }
+}
+
+.container {
+  height: 85vh;
+  display: grid;
+  grid-template-rows: repeat(5, 1fr);
+  grid-gap: 1rem;
+}
+
+.title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  color: hsl(97, 50%, 87%);
+  text-decoration: underline;
+}
+
+.title h1 {
+  font-size: 2rem;
+}
+
+.box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.cv {
+  color: hsl(97, 20%, 67%);
+}
+
+.cv h2 {
+  font-size: 2rem;
+}
+
+.hoy h2 {
+  text-shadow: 0 2px 2px #00000050, 0 0 10px #00000020;
+  font-size: 4rem;
+}
+
+.hoy h3 {
+  font-size: 2rem;
+}
+
+@media screen and (min-width: 768px) {
+  body {
+    overflow: hidden;
+  }
+
+  .container {
+    height: 100vh;
+  }
+
+  .title h1 {
+    font-size: 3rem;
+  }
+
+  .cv h2 {
+    font-size: 3rem;
+  }
+
+  .hoy h2 {
+    font-size: 6rem;
+  }
+
+  .hoy h3 {
+    font-size: 3rem;
+  }
+
+}
