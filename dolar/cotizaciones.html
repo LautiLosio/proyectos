@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dolar Blue Hoy</title>
+  <title>Dolares Hoy</title>
+
   <link rel="icon"
     href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💵</text></svg>">
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="cotizaciones.css">
   <link rel="manifest" href="manifest.json">
   <link rel="apple-touch-icon"
     href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💵</text></svg>" />
@@ -48,47 +49,40 @@
   <meta name="twitter:image" content="https://lautilosio.github.io/proyectos/dolar/share_banner.png">
   
 </head>
-
 <body>
 
-  <span class="container">
-    <div class="title">
-      <h1>Dolar Blue Hoy</h1>
-    </div>
-    <div class="box cv">
-      <h3>Compra</h3>
-      <h2 id="dolarBlueCompra">Cargando</h2>
-    </div>
-    <div class="box hoy">
-      <h2 id="dolarBlue">Cargando</h2>
-    </div>
-    <div class="box cv">
-      <h3>Venta</h3>
-      <h2 id="dolarBlueVenta">Cargando</h2>
-    </div>
-    <div class="arrow-box">
-      <p class="arrow" id="arrow">&downarrow;</p>
-    </div>
-  </span>
-
-  <span class="mas-cotizaciones">
-
-    <div class="footer">
-      <p>Hecho con 💚 por <a href="https://twitter.com/lauti_losio" target="_blank">Lauti</a></p>
-    </div>
-    
-    <a class="ver-mas" href="./cotizaciones.html" target="">
+  
+  <ul id="lista">
+    <li class="cotizacion" id="placeholder">
+      <h2 class="placeholder">Dolar Blue</h2>
+      <h3 class="placeholder">$180,00</h3>
+    </li>
+    <li class="cotizacion" id="placeholder">
+      <h2 class="placeholder">Dolar Blue</h2>
+      <h3 class="placeholder">$180,00</h3>
+    </li>
+    <li class="cotizacion" id="placeholder">
+      <h2 class="placeholder">Dolar Blue</h2>
+      <h3 class="placeholder">$180,00</h3>
+    </li>
+    <li class="cotizacion" id="placeholder">
+      <h2 class="placeholder">Dolar Blue</h2>
+      <h3 class="placeholder">$180,00</h3>
+    </li>
+    <li class="cotizacion" id="placeholder">
+      <h2 class="placeholder">Dolar Blue</h2>
+      <h3 class="placeholder">$180,00</h3>
+    </li>
+  </ul>
+  
+  <nav>
+    <a href="index.html">
       <button>
-        Ver más cotizaciones
+        💸 Volver
       </button>
     </a>
-    
-    <div class="cafecito">
-      <a href='https://cafecito.app/losio' rel='noopener' target='_blank'><img srcset='https://cdn.cafecito.app/imgs/buttons/button_4.png 1x, https://cdn.cafecito.app/imgs/buttons/button_4_2x.png 2x, https://cdn.cafecito.app/imgs/buttons/button_4_3.75x.png 3.75x' src='https://cdn.cafecito.app/imgs/buttons/button_4.png' alt='Invitame un café en cafecito.app' /></a>
-    </div>
-  </span>
+  </nav>
 
-  <script src="./main.js"></script>
+  <script src="cotizaciones.js"></script>
 </body>
-
 </html>

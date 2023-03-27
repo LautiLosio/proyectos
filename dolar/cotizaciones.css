@@ -1,0 +1,117 @@
+body {
+  background-image: none;
+  background-size: auto;
+  height: 90vh;
+}
+
+nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: sticky;
+  bottom: 0;
+}
+
+nav a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  text-decoration: none;
+  background-color: hsl(97, 50%, 87%);
+  padding: 1rem;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 2px #00000050, 0 0 10px #00000020;
+}
+
+nav a button {
+  color: #40612a;
+  background: none;
+  text-decoration: none;
+  font-weight: bold;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+nav a:hover {
+  background-color: hsl(97, 50%, 77%);
+}
+
+ul {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  list-style: none;
+  padding: 1rem;
+  font-size: medium;
+}
+
+ul li {
+  width: 100%;
+  min-height: 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  border: 2px solid hsl(97, 50%, 87%);
+  background-color: hsla(97, 50%, 87%, 0.2);
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  color: white;
+}
+
+h2 {
+  text-align: left;
+  font-size: 1.2rem;
+  font-weight: bold;
+  flex-grow: 1;
+}
+
+.placeholder {
+  content: "";
+  color: transparent;
+  height: 100%;
+  background: linear-gradient(90deg, hsl(97, 40%, 77%), hsl(97, 40%, 67%), hsl(97, 40%, 77%));
+  background-size: 200% 100%;
+  border-radius: 5px;
+  animation: gradient 2s infinite ease-in-out;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@media (min-width: 768px) {
+
+
+  ul {
+    width: 80%;
+    display: grid;
+    /* auto add columns */
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1rem;
+  }
+
+  ul li {
+    width: auto;
+    height: 50%;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+}

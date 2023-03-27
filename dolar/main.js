@@ -1,6 +1,7 @@
 let dolarBlue = document.getElementById("dolarBlue");
 let dolarBlueCompra = document.getElementById("dolarBlueCompra");
 let dolarBlueVenta = document.getElementById("dolarBlueVenta");
+let scrollArrow = document.getElementById("arrow");
 
 async function getDolarHoy() {
   const response = await fetch('https://www.dolarsi.com/api/api.php?type=dolar');
@@ -28,4 +29,12 @@ texts.forEach(text => {
   text.addEventListener("click", function() {
     window.getSelection().selectAllChildren(text);
   } );
+});
+
+// Scroll to bottom
+scrollArrow.addEventListener("click", function() {
+  window.scrollTo({
+    top: document.body.scrollHeight,
+    behavior: 'smooth'
+  });
 });
