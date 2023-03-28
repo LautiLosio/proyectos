@@ -21,7 +21,7 @@ nav a {
   background-color: hsl(97, 50%, 87%);
   padding: 1rem;
   border-radius: 10px;
-  margin-bottom: 1rem;
+  margin: 1rem 0;
   box-shadow: 0 2px 2px #00000050, 0 0 10px #00000020;
 }
 
@@ -39,23 +39,20 @@ nav a:hover {
   background-color: hsl(97, 50%, 77%);
 }
 
-ul {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+#lista {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 1rem;
   list-style: none;
-  padding: 1rem;
-  font-size: medium;
+  font-size: 1rem;
 }
 
-ul li {
-  width: 100%;
-  min-height: 50px;
-  display: flex;
-  justify-content: space-between;
+.cotizacion {
+  min-height: 60px;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
   align-items: center;
+  justify-content: center;
   gap: 1rem;
   border: 2px solid hsl(97, 50%, 87%);
   background-color: hsla(97, 50%, 87%, 0.2);
@@ -65,34 +62,36 @@ ul li {
   backdrop-filter: blur(5px);
 }
 
-li .icon { 
-  font-weight: bold;
+.icon { 
+  display: flex;
+  gap: 10px;
 }
 
 .up {
-  color: hsl(0, 80%, 77%);
+  color: hsl(0, 100%, 70%);
 }
 
 .down {
-  color: hsl(100, 80%, 67%);
+  color: hsl(100, 100%, 60%);
 }
 
 .neutral {
-  color: hsl(220, 80%, 67%);
+  color: hsl(214, 100%, 75%);
 }
 
 h2 {
   text-align: left;
-  font-size: 1.2rem;
   font-weight: bold;
-  flex-grow: 1;
+}
+
+h3 {
+  font-weight: bold;
 }
 
 .placeholder {
   content: "";
   color: transparent;
-  height: 100%;
-  background: linear-gradient(90deg, hsl(97, 40%, 77%), hsl(97, 40%, 67%), hsl(97, 40%, 77%));
+  background: linear-gradient(90deg, hsl(97, 20%, 60%), hsl(86, 50%, 35%), hsl(97, 20%, 60%));
   background-size: 200% 100%;
   border-radius: 5px;
   animation: gradient 2s infinite ease-in-out;
@@ -112,7 +111,7 @@ h2 {
   }
 }
 
-@media (min-width: 850px) {
+@media (min-width: 1060px) {
 
   body {
     display: flex;
@@ -120,22 +119,36 @@ h2 {
     align-items: center;
   }
   
-  ul {
+  #lista {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     height: 100%;
     width: 60%;
-    display: grid;
-    /* auto grid columns */
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
+
+  .cotizacion {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 2fr;
+  }
+
+  .cotizacion .icon {
+    font-size: 2rem;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+    align-items: center;
     gap: 1rem;
   }
 
-  ul li {
-    width: auto;
-    height: 50%;
+  h2 {
+    text-align: center;
+    font-size: 1.5rem;
+    flex-grow: 0;
   }
 
-  h2 {
-    font-size: 1.5rem;
+  h3 {
+    text-align: center;
+    font-size: 2.5rem;
+    flex-grow: 0;
   }
 
   nav {

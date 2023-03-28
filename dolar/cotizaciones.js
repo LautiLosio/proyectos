@@ -69,34 +69,37 @@ async function getCotizaciones() {
     li.classList.add("cotizacion");
     li.id = item.casa.nombre;
 
-    let h2 = document.createElement("h2");
-    h2.innerHTML = `${emojis[item.casa.nombre]} ${item.casa.nombre}`;
+    let name = document.createElement("h2");
+    name.innerHTML = `${emojis[item.casa.nombre]} ${item.casa.nombre}`;
 
     // change name of "Dolar Contado con Liqui" to "Dolar CCL"
     if (item.casa.nombre == "Dolar Contado con Liqui") {
-      h2.innerHTML = `${emojis[item.casa.nombre]} Dolar CCL`;
+      name.innerHTML = `${emojis[item.casa.nombre]} Dolar CCL`;
     }
 
     let div = document.createElement("div");
+
+    let icon = document.createElement("h3");
     div.classList.add("icon");
   
     if (variation > 0) {
-      div.innerHTML = "&blacktriangle;";
-      div.classList.add("up");
+      icon.innerHTML = "&blacktriangle;";
+      icon.classList.add("up");
     } else if (variation < 0) {
-      div.innerHTML = "&blacktriangledown;";
-      div.classList.add("down");
+      icon.innerHTML = "&blacktriangledown;";
+      icon.classList.add("down");
     } else {
-      div.innerHTML = "=";
-      div.classList.add("neutral");
+      icon.innerHTML = "=";
+      icon.classList.add("neutral");
     }
 
     
-    let h3 = document.createElement("h3");
-    h3.innerHTML = promedio.toLocaleString('es-AR', { style: 'currency', currency: 'ARS' });
+    let value = document.createElement("h3");
+    value.innerHTML = promedio.toLocaleString('es-AR', { style: 'currency', currency: 'ARS' });
     
-    li.appendChild(h2);
-    li.appendChild(h3);
+    li.appendChild(name);
+    div.appendChild(icon);
+    div.appendChild(value);
     li.appendChild(div);
     lista.appendChild(li);
   });
