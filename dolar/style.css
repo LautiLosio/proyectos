@@ -134,6 +134,7 @@ body {
   align-items: center;
   gap: 1rem;
   width: 100%;
+  text-decoration: none;
 }
 
 .ver-mas button {
