@@ -2,9 +2,17 @@ let lista = document.getElementById("lista");
 let placehoders = document.querySelectorAll("#placeholder");
 
 async function getCotizaciones() {
-  const response = await fetch('https://www.dolarsi.com/api/api.php?type=valoresprincipales');
-  const data = await response.json();
+  const dolar = await fetch('https://www.dolarsi.com/api/api.php?type=dolar');
+  const valoresPrincipales = await fetch('https://www.dolarsi.com/api/api.php?type=valoresprincipales');
 
+
+  let data =  await Promise.all([dolar, valoresPrincipales]) // wait for both promises to resolve
+    .then(responses => Promise.all(responses.map(r => r.json()))) // parse each response as JSON
+    .then(data => {
+      return data[0].concat(data[1]);
+    }
+  ); 
+      
   // html prototype
   // <li class="cotizacion" id="dolarBlue">
   //   <div class="icon">&blacktriangle;</div>
@@ -13,15 +21,14 @@ async function getCotizaciones() {
   // </li>
 
   let emojis = {
-    "Dolar Oficial": "💵",
-    "Dolar Blue": "💸",
-    "Dolar Soja": "🌾",
-    "Dolar Contado con Liqui": "🏦",
+    "Oficial": "💵",
+    "Blue": "💸",
+    "Dolar Contado con Liqui": "🇺🇲",
+    "Mayorista Bancos": "💰️",
+    "BCRA de Referencia": "🏦",
     "Dolar Bolsa": "📈",
     "Bitcoin": "🪙",
     "Dolar turista": "🏖️",
-    "Dolar": "💲",
-    "Argentina": "🇦🇷",
   }
   
   // text comes formatted as "1.900,00" and needs to be converted to "1900.00"    
@@ -59,9 +66,19 @@ async function getCotizaciones() {
       }
     }
 
+    const filterList = [
+      "Dolar",
+      "Argentina",
+      "Dolar Oficial",
+      "Dolar Blue",
+      "Dolar Soja",
+      "Banco Nación Billete",
+      "Banco Nación Público"
+    ];
 
-    // filter out "Dolar" and "Argentina"
-    if (item.casa.nombre == "Dolar" || item.casa.nombre == "Argentina") {
+
+    // filter out the items in the filterList
+    if (filterList.includes(item.casa.nombre)) {
       return;
     }
 
