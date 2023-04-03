@@ -4,12 +4,13 @@ let placehoders = document.querySelectorAll("#placeholder");
 async function getCotizaciones() {
   const dolar = await fetch('https://www.dolarsi.com/api/api.php?type=dolar');
   const valoresPrincipales = await fetch('https://www.dolarsi.com/api/api.php?type=valoresprincipales');
+  const others = await fetch('https://www.dolarsi.com/api/api.php?type=cotizador');
 
 
-  let data =  await Promise.all([dolar, valoresPrincipales]) // wait for both promises to resolve
+  let data =  await Promise.all([dolar, valoresPrincipales, others])
     .then(responses => Promise.all(responses.map(r => r.json()))) // parse each response as JSON
     .then(data => {
-      return data[0].concat(data[1]);
+      return data[0].concat(data[1]).concat(data[2]);
     }
   ); 
       
@@ -29,6 +30,8 @@ async function getCotizaciones() {
     "Dolar Bolsa": "📈",
     "Bitcoin": "🪙",
     "Dolar turista": "🏖️",
+    "Euro": "🇪🇺",
+    "Real": "🇧🇷"
   }
   
   // text comes formatted as "1.900,00" and needs to be converted to "1900.00"    
@@ -66,6 +69,9 @@ async function getCotizaciones() {
       }
     }
 
+    isNaN(compra) ? compra = 'No cotiza' : compra;
+    isNaN(venta) ? venta = 'No cotiza' : venta;
+
     const filterList = [
       "Dolar",
       "Argentina",
@@ -73,7 +79,11 @@ async function getCotizaciones() {
       "Dolar Blue",
       "Dolar Soja",
       "Banco Nación Billete",
-      "Banco Nación Público"
+      "Banco Nación Público",
+      "Libra Esterlina",
+      "Peso Uruguayo",
+      "Peso Chileno",
+      "Guaraní"
     ];
 
 
@@ -86,6 +96,9 @@ async function getCotizaciones() {
     li.classList.add("cotizacion");
     li.id = item.casa.nombre;
 
+    let textContainer = document.createElement("div");
+    textContainer.classList.add("text-container");
+
     let name = document.createElement("h2");
     name.innerHTML = `${emojis[item.casa.nombre]} ${item.casa.nombre}`;
 
@@ -94,10 +107,7 @@ async function getCotizaciones() {
       name.innerHTML = `${emojis[item.casa.nombre]} Dolar CCL`;
     }
 
-    let div = document.createElement("div");
-
     let icon = document.createElement("h3");
-    div.classList.add("icon");
   
     if (variation > 0) {
       icon.innerHTML = "&blacktriangle;";
@@ -113,12 +123,35 @@ async function getCotizaciones() {
     
     let value = document.createElement("h3");
     value.innerHTML = promedio.toLocaleString('es-AR', { style: 'currency', currency: 'ARS' });
+
+    let compraText = document.createElement("h2");
+    compraText.innerHTML = `Compra: ${compra.toLocaleString('es-AR', { style: 'currency', currency: 'ARS' })}`;
+    compraText.classList.add("compra-venta");
+    compraText.id = "compra";
+
+    let ventaText = document.createElement("h2");
+    ventaText.innerHTML = `Venta: ${venta.toLocaleString('es-AR', { style: 'currency', currency: 'ARS' })}`;
+    ventaText.classList.add("compra-venta");
+    ventaText.id = "venta";
+
+    let valueContainer = document.createElement("div");
+    valueContainer.classList.add("value-container");
+
     
     li.appendChild(name);
-    div.appendChild(icon);
-    div.appendChild(value);
-    li.appendChild(div);
+
+    textContainer.appendChild(compraText);
+    valueContainer.appendChild(value);
+    valueContainer.appendChild(icon);
+    textContainer.appendChild(valueContainer);
+    textContainer.appendChild(ventaText);
+    li.appendChild(textContainer);
     lista.appendChild(li);
+
+    li.addEventListener("click", () => {
+      compraText.classList.toggle("show");
+      ventaText.classList.toggle("show");
+    });
   });
 }
 

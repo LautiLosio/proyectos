@@ -53,23 +53,33 @@ nav a:hover {
 .cotizacion {
   min-height: 60px;
   display: grid;
-  grid-template-columns: 2fr 1fr;
+  grid-template-columns: 1fr;
   align-items: center;
   justify-content: center;
   gap: 1rem;
   border: 2px solid hsl(97, 50%, 87%);
   background-color: hsla(97, 50%, 87%, 0.2);
-  padding: 0.5rem 1rem;
+  padding: 1rem;
   border-radius: 10px;
   color: white;
   backdrop-filter: blur(5px);
 }
 
-.icon { 
+.text-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.value-container { 
   display: flex;
   gap: 10px;
   align-items: center;
   white-space: nowrap;
+  grid-area: value;
+  font-size: 1.5rem;
 }
 
 .up {
@@ -100,6 +110,19 @@ h3 {
   background-size: 200% 100%;
   border-radius: 5px;
   animation: gradient 2s infinite ease-in-out;
+}
+
+.compra-venta {
+  color: #ffffff90;
+  font-size: 1.2rem;
+  line-height: 0;
+  overflow: hidden;
+  text-align: center;
+  transition: line-height 0.2s ease;
+}
+
+.show {
+  line-height: 1;
 }
 
 @keyframes gradient {
@@ -135,10 +158,9 @@ h3 {
     grid-template-rows: 1fr 2fr;
   }
 
-  .cotizacion .icon {
+  .cotizacion .value-container {
     font-size: 2rem;
     display: flex;
-    flex-direction: row-reverse;
     justify-content: center;
     align-items: center;
     gap: 1rem;
