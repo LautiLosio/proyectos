@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>¿Le gano a la inflación?</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📈</text></svg>">
+</head>
+<body>
+  <div class="container">    
+    <div class="header">
+      <h1>¿Le gano a la inflación?</h1>
+      <p>¿Tiene sentido comprarlo en cuotas?</p>
+    </div>
+
+    <form>
+
+      <div class="group" id="precio-group">
+        <label for="precio">Precio del producto</label>
+        <input type="number" name="precio" id="precio" step="0.01" min="1" required>
+      </div>
+      
+      <div class="group" id="cuotas-group">
+        <label for="cuotas">Cantidad de cuotas</label>
+        <input type="number" name="cuotas" id="cuotas" min="1" required>
+      </div>
+
+      <div class="group" id="interes-group">
+        <div class="radio">
+          <input type="radio" name="has-interes" id="sin-interes" value="false" required>
+          <label for="sin-interes">Sin interés</label>
+        </div>
+        <div class="radio">
+          <input type="radio" name="has-interes" id="con-interes" value="true" required>
+          <label for="con-interes">Con interés</label>
+        </div>
+      </div>
+      
+      <div class="interes-input hidden" id="interes-input">
+        <label for="interes">Interés</label>
+        <input type="number" name="interes" id="interes" step="0.01" min="0">
+      </div>
+      
+      <input type="submit" value="Calcular" class="btn" id="calcular-btn">
+  </div>
+
+  </form>
+
+  <script src="main.js"></script>
+</body>
+</html>
