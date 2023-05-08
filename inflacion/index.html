@@ -19,8 +19,13 @@
     <form>
 
       <div class="group" id="precio-group">
-        <label for="precio">Precio del producto</label>
-        <input type="number" name="precio" id="precio" step="0.01" min="1" required>
+        <label for="precio-hoy">Precio del producto hoy</label>
+        <input type="number" name="precio-hoy" id="precio-hoy" step="0.01" min="1" required inputmode="numeric">
+      </div>
+
+      <div class="group" id="precio-interes-group">
+        <label for="precio-interes">Precio del producto en cuotas</label>
+        <input type="number" name="precio-interes" id="precio-interes" step="0.01" min="1" required>
       </div>
       
       <div class="group" id="cuotas-group">
@@ -28,27 +33,57 @@
         <input type="number" name="cuotas" id="cuotas" min="1" required>
       </div>
 
-      <div class="group" id="interes-group">
-        <div class="radio">
-          <input type="radio" name="has-interes" id="sin-interes" value="false" required>
-          <label for="sin-interes">Sin interés</label>
+      <div class="group">
+        <div class="group" id="interes-group">
+          <div class="radio">
+            <input type="radio" name="has-interes" id="sin-interes" value="false" required>
+            <label for="sin-interes">Sin interés</label>
+          </div>
+          <div class="radio">
+            <input type="radio" name="has-interes" id="con-interes" value="true" required>
+            <label for="con-interes">Con interés</label>
+          </div>
         </div>
-        <div class="radio">
-          <input type="radio" name="has-interes" id="con-interes" value="true" required>
-          <label for="con-interes">Con interés</label>
-        </div>
+        
+        <input class="disabled" type="number" name="interes" id="interes" step="0.01" min="0" disabled>
       </div>
       
-      <div class="interes-input hidden" id="interes-input">
-        <label for="interes">Interés</label>
-        <input type="number" name="interes" id="interes" step="0.01" min="0">
-      </div>
-      
-      <input type="submit" value="Calcular" class="btn" id="calcular-btn">
+      <input type="submit" value="Calcular" class="btn" id="calcular-btn" data-micromodal-trigger="modal-1">
   </div>
 
   </form>
 
+  <script src="https://unpkg.com/micromodal/dist/micromodal.min.js"></script>
   <script src="main.js"></script>
+
+
+  <!-- MicroModal init -->
+  <!-- [1] -->
+  <div id="modal-1" aria-hidden="true">
+
+    <!-- [2] -->
+    <div tabindex="-1" data-micromodal-close>
+
+      <!-- [3] -->
+      <div role="dialog" aria-modal="true" aria-labelledby="modal-1-title" >
+
+
+        <header>
+          <h2 id="modal-1-title">
+            Modal Title
+          </h2>
+
+          <!-- [4] -->
+          <button aria-label="Close modal" data-micromodal-close></button>
+        </header>
+
+        <div id="modal-1-content">
+          Modal Content
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <!-- MicroModal end -->
 </body>
 </html>
