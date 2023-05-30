@@ -1,0 +1,14 @@
+.volver button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: hsl(97, 50%, 87%);
+  color: #40612a;
+  font-weight: bold;
+  border: none;
+  padding: 1rem;
+  border-radius: 10px;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
