@@ -9,17 +9,25 @@
   font-family: 'Space Mono', monospace;
 }
 
+:root { 
+  --background-color: #fbf1c7;
+  --text-color: #1d2021;
+  --main-color: #98971a;
+  --secondary-color: #1d2021;
+  --accent-color: #fabd2f;
+}
+
 input,
 textarea,
 button,
 select,
 a,
 span {
-  -webkit-tap-highlight-color: transparent;
+  -webkit-tap-highlm-color: transparent;
 }
 
 body {
-  background: hsl(25, 76%, 91%);
+  background: var(--background-color);
   overflow: hidden;
   transition: all 0.2s ease-in-out;
 }
@@ -60,8 +68,8 @@ body {
   justify-content: center;
   align-items: center;
   font-size: 2rem;
-  background-color: darkslategray;
-  color: antiquewhite;
+  background-color: var(--main-color);
+  color: var(--text-color);
   border-radius: 50%;
   padding: 0.5rem;
   cursor: pointer;
@@ -194,7 +202,7 @@ canvas {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: antiquewhite;
+  background-color: var(--background-color);
   padding: 1rem;
   border-radius: 1rem;
   width: 80%;
@@ -210,29 +218,28 @@ canvas {
 
 .modal-content h1 {
   font-size: 1.5rem;
-  color: hsl(25, 76%, 31%);
+  color: var(--text-color);
 }
 
 .modal-content p {
   font-size: 1rem;
-  color: hsl(25, 76%, 11%);
+  color: var(--text-color);
 }
 
 .modal-content input {
   font-size: 1rem;
-  color: hsl(25, 76%, 11%);
-  background-color: antiquewhite;
+  color: var(--text-color);
+  background-color: var(--background-color);
   border-radius: 0.5rem;
   padding: 0.5rem;
   width: 100%;
-  border: 2px solid hsla(25, 76%, 31%, 0.5);
-  background-color: hsl(25, 76%, 91%);
+  border: 2px solid var(--text-color);
 }
 
 .modal-content button {
   font-size: 1rem;
-  color: antiquewhite;
-  background-color: saddlebrown;
+  color: var(--background-color);
+  background-color: var(--main-color);
   border-radius: 0.5rem;
   padding: 0.5rem;
   width: 100%;
@@ -244,8 +251,8 @@ canvas {
   float: right;
   cursor: pointer;
   font-size: 1.5rem;
-  background-color: saddlebrown;
-  color: antiquewhite;
+  background-color: var(--accent-color);
+  color: var(--background-color);
   border-radius: 50%;
   padding: 0.5rem;
   margin: 0 0.5rem; 
@@ -266,11 +273,14 @@ canvas {
 
 /* dark mode */
 .dark {
-  background-color: darkslategray;
-  color: antiquewhite;
+  --background-color: #1d2021;
+  --text-color: #fbf1c7;
+  --main-color: #98971a;
+  --secondary-color: #ebdbb2;
+  --accent-color: #fabd2f;
 }
 
 .dark .button {
-  background-color: antiquewhite;
-  color: saddlebrown;
+  background-color: var(--main-color);
+  color: var(--background-color);
 }

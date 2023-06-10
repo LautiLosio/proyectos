@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,8 +10,9 @@
   <link rel="icon"
     href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📈</text></svg>">
 </head>
+
 <body>
-  <div class="container">    
+  <div class="container">
     <div class="header">
       <h1>¿Le gano a la inflación?</h1>
       <p>¿Tiene sentido comprarlo en cuotas?</p>
@@ -27,7 +29,7 @@
         <label for="precio-interes">Precio del producto en cuotas</label>
         <input type="number" name="precio-interes" id="precio-interes" step="0.01" min="1" required>
       </div>
-      
+
       <div class="group" id="cuotas-group">
         <label for="cuotas">Cantidad de cuotas</label>
         <input type="number" name="cuotas" id="cuotas" min="1" required>
@@ -44,10 +46,10 @@
             <label for="con-interes">Con interés</label>
           </div>
         </div>
-        
+
         <input class="disabled" type="number" name="interes" id="interes" step="0.01" min="0" disabled>
       </div>
-      
+
       <input type="submit" value="Calcular" class="btn" id="calcular-btn" data-micromodal-trigger="modal-1">
   </div>
 
@@ -65,7 +67,7 @@
     <div tabindex="-1" data-micromodal-close>
 
       <!-- [3] -->
-      <div role="dialog" aria-modal="true" aria-labelledby="modal-1-title" >
+      <div role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
 
 
         <header>
@@ -86,4 +88,5 @@
   </div>
   <!-- MicroModal end -->
 </body>
+
 </html>
