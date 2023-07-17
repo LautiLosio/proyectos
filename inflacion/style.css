@@ -26,6 +26,9 @@ form {
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
+  padding: 1rem;
+  font-size: 1rem;
+  font-weight: 600;
 }
 
 form input {
@@ -38,18 +41,17 @@ form input {
   flex-grow: 1;
 }
 
-.group {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+.group { 
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 1fr;
   gap: 1rem;
+  justify-items: center;
+  align-items: center;
 }
 
-.interes-input {
+#interes-group {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
 }
 
 .btn {
@@ -66,6 +68,16 @@ form input {
   background-color: #8b4513;
 }
 
-.hidden {
-  display: none;
+.disabled {
+  opacity: 0.5;
+  background-color: wheat;
+  cursor: not-allowed;
+}
+
+@media screen and (min-width: 768px) {
+  .group {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+    justify-items: start;
+  }
 }

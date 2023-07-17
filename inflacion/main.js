@@ -1,19 +1,23 @@
-// select input name="has-interes" 
-// select interes-input
-// if has-interes value is true" show interes-input
-// else hide interes-input
+MicroModal.init();
+
 hasInteres = document.querySelectorAll('input[name="has-interes"]');
-interesInput = document.querySelector('.interes-input');
+interesInput = document.querySelector("#interes");
 
 hasInteres.forEach(function (input) {
-  input.addEventListener('change', function() {
+  input.addEventListener("change", function () {
     console.log(input.value);
-    if (input.value === 'true') {
-        interesInput.classList.remove('hidden');
-    }
-    else {
-        interesInput.classList.add('hidden');
+    if (input.value === "true") {
+      interesInput.removeAttribute("disabled");
+      interesInput.classList.remove("disabled");
+    } else {
+      interesInput.setAttribute("disabled", "disabled");
+      interesInput.classList.add("disabled");
     }
   });
 });
-  
+
+calcuarBtn = document.querySelector("#calcular-btn");
+calcularBtn.addEventListener("click", function (e) {
+  e.preventDefault();
+  MicroModal.show("modal-1");
+});

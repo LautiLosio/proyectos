@@ -62,7 +62,7 @@ function calcluateValue(touchedInput, otherInput) {
     return;
   }
 
-  let value = parseFloat(touchedInput.value);
+  let value = parseFloat(touchedInput.value.replace(".", "").replace(",", "."));
   let result;
 
   if (touchedInput == pesoInput) {
@@ -71,20 +71,19 @@ function calcluateValue(touchedInput, otherInput) {
     result = value * selectedDolarValue.venta;
   }
 
-  result = result.toFixed(2);
-  result = result.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  result = formatNumber(result, otherInput);
+
   otherInput.value = result;
 }
 
 // Formateo de numeros
 function formatNumber(number, affectedInput) {
-  if (number == "") {
-    affectedInput.value = "";
-    return "";
-  }
-  number = parseFloat(number).toFixed(2);
-  number = number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-  return number;
+ console.log(number);
+
+ return number.toLocaleString("es-AR", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
 }
 
 // Carga de cotizaciones

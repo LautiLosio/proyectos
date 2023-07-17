@@ -1,16 +1,17 @@
 :root {
-  --bg: #1a2b34;
-  --grey: #334651;
-  --red: #ea5e5e;
-  --yellow: #f7ba3e;
-  --green: #56b3b4;
-  --purple: #bc85bc;
+  --light: #fbf1c7;
+  --bg: #1d2021;
+  --grey: #fbf1c720;
+  --red: #fb4934;
+  --yellow: #fabd2f;
+  --green: #b8bb26;
+  --purple: #83a598;
   --unit: 10px;
 }
 
 :focus {
   transition: none;
-  outline: 2px solid var(--red);
+  outline: 2px solid var(--yellow);
   outline-offset: 3px;
 }
 
@@ -227,6 +228,8 @@ body {
 
 .back {
   position: absolute;
+  display: flex;
+  justify-content: center;
   top: 1rem;
   left: 1rem;
   font-size: 1.5rem;
@@ -234,4 +237,10 @@ body {
   text-decoration: none;
   border-radius: 2px;
   padding: 0.5rem;
+  color: var(--light);
+  border: 2px solid var(--light);
+  border-radius: 50%;
+  aspect-ratio: 1/1;
+  width: 2rem;
+  height: 2rem;
 }
