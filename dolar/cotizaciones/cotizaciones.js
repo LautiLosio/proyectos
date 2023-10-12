@@ -4,113 +4,69 @@ let placehoders = document.querySelectorAll("#placeholder");
 let cotizaciones = [];
 
 async function getCotizaciones() {
-  const [dolar, valoresPrincipales, others] = await Promise.all([
-    fetch('https://www.dolarsi.com/api/api.php?type=dolar'),
-    fetch('https://www.dolarsi.com/api/api.php?type=valoresprincipales'),
-    fetch('https://www.dolarsi.com/api/api.php?type=cotizador')
-  ]).then(responses => Promise.all(responses.map(r => r.json())));
+  const response = await fetch("https://dolarapi.com/v1/dolares");
+  const data = await response.json();
+  
+  setTimeout(() => {
+    placehoders.forEach(placeholder => {
+      placeholder ? placeholder.remove() : null;
+    });
+    processData(data);
+  }, 500);
 
-  let data = [...dolar, ...valoresPrincipales, ...others];
-
-
-  processData(data);
 }
 
 function processData(data) {
-  let emojis = {
-    "Oficial": "💵",
-    "Blue": "💸",
-    "Dolar Contado con Liqui": "🇺🇲",
-    "Mayorista Bancos": "💰️",
-    "BCRA de Referencia": "🏦",
-    "Dolar Bolsa": "📈",
-    "Bitcoin": "🪙",
-    "Dolar turista": "🏖️",
-    "Euro": "🇪🇺",
-    "Real": "🇧🇷"
-  }
-
   data.forEach(item => {
-    let compra = parseFloat(item.casa.compra.replace(".", "").replace(",", "."));
-    let venta = parseFloat(item.casa.venta.replace(".", "").replace(",", "."));
-    let promedio = calculatePromedio(compra, venta, item.casa.compra, item.casa.venta);
-    let variation = parseFloat(item.casa.variacion?.replace(".", "").replace(",", "."));
 
-    const filterList = [
-      "Dolar",
-      "Argentina",
-      "Dolar Oficial",
-      "Dolar Blue",
-      "Dolar Soja",
-      "Banco Nación Billete",
-      "Banco Nación Público",
-      "Libra Esterlina",
-      "Peso Uruguayo",
-      "Peso Chileno",
-      "Guaraní"
-    ];
+    item.promedio = ((item.compra + item.venta) / 2).toFixed(2);
 
-    if (filterList.includes(item.casa.nombre)) {
-      return;
+    if (!item.compra) {
+      item.promedio = item.venta;
+    } else if (!item.venta) {
+      item.promedio = item.compra;
     }
 
-    let li = createCotizacionElement(item.casa.nombre, emojis);
+
+    let li = createCotizacionElement(item.nombre, item.casa);
     let textContainer = createTextContainerElement();
-    let compraText = createCompraVentaElement("compra", compra);
-    let ventaText = createCompraVentaElement("venta", venta);
+    let compraText = createCompraVentaElement("compra", item.compra);
+    let ventaText = createCompraVentaElement("venta", item.venta);
     let valueContainer = createValueContainerElement();
-    let value = createValueElement(promedio);
-    let icon = createIconElement(variation);
+    let value = createValueElement(item.promedio);
 
-    appendElements(li, textContainer, compraText, ventaText, valueContainer, value, icon);
+    appendElements(li, textContainer, compraText, ventaText, valueContainer, value);
     addClickEventListener(li, compraText, ventaText);
-    appendToLista(li);
 
-    cotizaciones.push({
-      nombre: item.casa.nombre,
-      compra: compra,
-      venta: venta,
-      promedio: promedio,
-    });
+    // if window is larger than 1060px show all values
+    if (window.innerWidth >= 1060) {
+      compraText.classList.add("show");
+      ventaText.classList.add("show");
+    }
+    
+    lista.appendChild(li);
   });
 }
 
-function calculatePromedio(compra, venta, compraValue, ventaValue) {
-  if (compraValue == 0) {
-    return venta;
-  } else if (ventaValue == 0) {
-    return compra;
+function createCotizacionElement(nombre, casa) {
+  let emojis = {
+    "oficial": "💵",
+    "blue": "💸",
+    "bolsa": "📈",
+    "contadoconliqui": "🇺🇲",
+    "solidario": "💳️",
+    "mayorista": "💰️"
   }
 
-  if (compraValue == "No Cotiza") {
-    if (venta > 0) {
-      return venta;
-    } else {
-      return 'No cotiza';
-    }
-  }
-
-  if (ventaValue == "No Cotiza") {
-    if (compra > 0) {
-      return compra;
-    } else {
-      return 'No cotiza';
-    }
-  }
-
-  return (compra + venta) / 2;
-}
-
-function createCotizacionElement(nombre, emojis) {
   let li = document.createElement("li");
   li.classList.add("cotizacion");
   li.id = nombre;
 
   let name = document.createElement("h2");
-  name.innerHTML = `${emojis[nombre]} ${nombre}`;
+  name.innerHTML = `${emojis[casa]} ${nombre}`;
 
-  if (nombre == "Dolar Contado con Liqui") {
-    name.innerHTML = `${emojis[nombre]} Dolar CCL`;
+  if (casa == "contadoconliqui") {
+    name.innerHTML = `${emojis[casa]} Dolar CCL`;
   }
 
   li.appendChild(name);
@@ -126,8 +82,12 @@ function createTextContainerElement() {
 }
 
 function createCompraVentaElement(id, value) {
+  if (!value) {
+    value = "No disponible";
+  }
+
   let element = document.createElement("h2");
-  element.innerHTML = `${id.charAt(0).toUpperCase() + id.slice(1)}: ${value.toLocaleString('es-AR', { style: 'currency', currency: 'ARS' })}`;
+  element.innerHTML = `${id.charAt(0).toUpperCase() + id.slice(1)}: ${value.toLocaleString('es-AR', { style: 'currency', currency: 'ARS' }) || value}`;
   element.classList.add("compra-venta");
   element.id = id;
 
@@ -148,27 +108,9 @@ function createValueElement(value) {
   return element;
 }
 
-function createIconElement(variation) {
-  let element = document.createElement("h3");
-
-  if (variation > 0) {
-    element.innerHTML = "&blacktriangle;";
-    element.classList.add("up");
-  } else if (variation < 0) {
-    element.innerHTML = "&blacktriangledown;";
-    element.classList.add("down");
-  } else {
-    element.innerHTML = "=";
-    element.classList.add("neutral");
-  }
-
-  return element;
-}
-
-function appendElements(li, textContainer, compraText, ventaText, valueContainer, value, icon) {
+function appendElements(li, textContainer, compraText, ventaText, valueContainer, value) {
   textContainer.appendChild(compraText);
   valueContainer.appendChild(value);
-  valueContainer.appendChild(icon);
   textContainer.appendChild(valueContainer);
   textContainer.appendChild(ventaText);
   li.appendChild(textContainer);
@@ -181,12 +123,4 @@ function addClickEventListener(li, compraText, ventaText) {
   });
 }
 
-function appendToLista(li) {
-  lista.appendChild(li);
-}
-
-getCotizaciones().then(() => {
-  placehoders.forEach(placeholder => {
-    placeholder.remove();
-  });
-});
+getCotizaciones();
