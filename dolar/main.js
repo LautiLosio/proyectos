@@ -18,7 +18,7 @@ async function getDolar() {
   blue = {
     compra: compra,
     venta: venta,
-    fechaActualizacion: data.fecha,
+    fechaActualizacion: data.fechaActualizacion,
     avg: (compra + venta) / 2
   }
 
