@@ -28,9 +28,29 @@ select {
   height: 100%;
   padding: 0.5rem;
   border: 2px solid hsl(97, 50%, 77%);
-  background-color: hsla(97, 50%, 87%, 0.2);
+  background-color: hsl(97, 40%, 37%);
   color: white;
   border-radius: 0.5rem;
   font-size: 1rem;
   font-weight: bold;
+}
+
+select:hover {
+  background-color: hsl(97, 40%, 27%);
+}
+
+#tipo-precio {
+  gap: 0;
+  font-size: 11px;
+  font-weight: bold;
+  font-style: monospace;
+  color: hsl(97, 20%, 67%);
+  user-select: none;
+}
+
+#tipo-precio {
+  .active {
+    transition: color 0.2s ease-in-out;
+    color: white;
+  }
 }

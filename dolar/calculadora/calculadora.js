@@ -1,19 +1,21 @@
 let dolarInput = document.getElementById("dolarInput");
 let pesoInput = document.getElementById("pesoInput");
 let dolarType = document.getElementById("dolarType");
+let tipoPrecioElement = document.getElementById("tipo-precio");
 
-let cotizaciones = [];
+let cotizaciones = {};
 let selectedDolarValue;
 let lastTouchedInput;
+let tipoPrecio = "promedio";
 
 // Carga de cotizaciones y seleccion de dolar
 getCotizaciones().then(() => {
-  selectedDolarValue = cotizaciones.find(item => item.nombre == dolarType.value);
+  selectedDolarValue = cotizaciones.find(item => item.casa == dolarType.value);
 });
 
 // Detector de cambio de tipo de dolar
 dolarType.addEventListener("change", function() {
-  selectedDolarValue = cotizaciones.find(item => item.nombre === dolarType.value);
+  selectedDolarValue = cotizaciones.find(item => item.casa === dolarType.value);
 
   if (lastTouchedInput == dolarInput) {
     calcluateValue(dolarInput, pesoInput);
@@ -22,23 +24,36 @@ dolarType.addEventListener("change", function() {
   }
 });
 
-
-// Calculo de dolar a peso
-dolarInput.addEventListener("input", function() {
-  calcluateValue(dolarInput, pesoInput);
-  lastTouchedInput = dolarInput;
-});
-
-// Calculo de peso a dolar
-pesoInput.addEventListener("input", function() {
-  calcluateValue(pesoInput, dolarInput);
-  lastTouchedInput = pesoInput;
+// Detector de cambio de tipo de precio
+tipoPrecioElement.addEventListener("click", function() {
+  if (tipoPrecioElement.children[0].classList.contains("active")){
+    tipoPrecioElement.children[0].classList.remove("active");
+    tipoPrecioElement.children[1].classList.add("active");
+    tipoPrecio = "promedio";
+  } else if (tipoPrecioElement.children[1].classList.contains("active")){
+    tipoPrecioElement.children[1].classList.remove("active");
+    tipoPrecioElement.children[2].classList.add("active");
+    tipoPrecio = "venta";
+  } else if (tipoPrecioElement.children[2].classList.contains("active")){
+    tipoPrecioElement.children[2].classList.remove("active");
+    tipoPrecioElement.children[0].classList.add("active");
+    tipoPrecio = "compra";
+  }
+  calcluateValue(lastTouchedInput, lastTouchedInput == dolarInput ? pesoInput : dolarInput);
 });
 
 // Formateo de numeros al salir del input
 for (let input of [dolarInput, pesoInput]) {
 
   let otherInput = input == dolarInput ? pesoInput : dolarInput;
+
+  input.addEventListener("focus", function() {
+    lastTouchedInput = input;
+  });
+
+  input.addEventListener("input", function() {
+    calcluateValue(input, otherInput);
+  });
 
   input.addEventListener("keydown", function(event) {
     if (event.key === "Enter") {
@@ -48,9 +63,18 @@ for (let input of [dolarInput, pesoInput]) {
   });
 
   input.addEventListener("blur", function() {
-    input.value = formatNumber(input.value, otherInput);
-  });
+    input.value = formatNumber(parseFloat(input.value.replace(/\./g, "").replace(",", ".")));
+    otherInput.value = formatNumber(parseFloat(otherInput.value.replace(/\./g, "").replace(",", ".")));
 
+    if (input.value == "") {
+      otherInput.value = "";
+    }
+
+    if (input.value == "NaN") {
+      input.value = "";
+      otherInput.value = "";
+    }
+  });
 }
 
 // ------- Funciones -------
@@ -62,83 +86,36 @@ function calcluateValue(touchedInput, otherInput) {
     return;
   }
 
-  let value = parseFloat(touchedInput.value.replace(".", "").replace(",", "."));
+  let value = parseFloat(touchedInput.value.replace(/\./g, "").replace(",", "."));
+
   let result;
 
   if (touchedInput == pesoInput) {
-    result = value / selectedDolarValue.compra;
+    result = value / selectedDolarValue[tipoPrecio];
   } else {
-    result = value * selectedDolarValue.venta;
+    result = value * selectedDolarValue[tipoPrecio];
   }
 
-  result = formatNumber(result, otherInput);
-
-  otherInput.value = result;
-}
-
-// Formateo de numeros
-function formatNumber(number, affectedInput) {
- console.log(number);
-
- return number.toLocaleString("es-AR", {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  });
+  otherInput.value = formatNumber(result);
 }
 
 // Carga de cotizaciones
 async function getCotizaciones() {
-  const [dolar, valoresPrincipales, others] = await Promise.all([
-    fetch('https://www.dolarsi.com/api/api.php?type=dolar'),
-    fetch('https://www.dolarsi.com/api/api.php?type=valoresprincipales'),
-    fetch('https://www.dolarsi.com/api/api.php?type=cotizador')
-  ]).then(responses => Promise.all(responses.map(r => r.json())));
+  let response = await fetch("https://dolarapi.com/v1/dolares");
+  let data = await response.json();
 
-  let data = [...dolar, ...valoresPrincipales, ...others];
-
-  processData(data);
-}
-
-// Procesamiento de cotizaciones (filtro y calculo de promedio)
-async function processData(data) {
   data.forEach(item => {
-    let compra = parseFloat(item.casa.compra.replace(".", "").replace(",", "."));
-    let venta = parseFloat(item.casa.venta.replace(".", "").replace(",", "."));
-    let promedio = calculatePromedio(compra, venta);
-
-    const filterList = [  
-      "Dolar",
-      "Argentina",
-      "Dolar Oficial",
-      "Dolar Blue",
-      "Dolar Soja",
-      "Banco Nación Billete",
-      "Banco Nación Público",
-      "Libra Esterlina",
-      "Peso Uruguayo",
-      "Peso Chileno",
-      "Guaraní"
-    ];
-
-    if (filterList.includes(item.casa.nombre)) {
-      return;
-    }
-
-    cotizaciones.push({
-      nombre: item.casa.nombre,
-      compra: compra,
-      venta: venta,
-      promedio: promedio,
-    });
+    item.promedio = (item.compra + item.venta) / 2;
   });
+
+  cotizaciones = data;
 }
-  
-// Calculo de promedio
-function calculatePromedio(compra, venta) {
-  let promedio = (compra + venta) / 2;
-  promedio = promedio.toFixed(2);
-  promedio = promedio.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-  return promedio;
+
+function formatNumber(number) {
+  return number.toLocaleString("es-AR", {
+    maximumFractionDigits: 2,
+    minimumFractionDigits: 2
+  });
 }
 
 
