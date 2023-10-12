@@ -1,64 +1,49 @@
-let dolarBlue = document.getElementById("dolarBlue");
-let dolarBlueCompra = document.getElementById("dolarBlueCompra");
-let dolarBlueVenta = document.getElementById("dolarBlueVenta");
-let scrollArrow = document.getElementById("arrow");
-let ultimaActualizacion = document.getElementById("ultimaActualizacion");
-let dolarBlueValues = {};
+const textBlueAvg = document.getElementById("avg");
+const textBlueCompra = document.getElementById("compra");
+const textBlueVenta = document.getElementById("venta");
+const scrollArrow = document.getElementById("arrow");
+const ultimaActualizacion = document.getElementById("ultimaActualizacion");
+const reload = document.getElementById("reload");
 
-async function getDolarHoy() {
-  const response = await fetch('https://www.dolarsi.com/api/api.php?type=dolar');
+let blue = {}
+const api = "https://dolarapi.com/v1/dolares/"
+
+async function getDolar() {
+  const response = await fetch(api + "blue");
   const data = await response.json();
+  
+  const compra = parseFloat(data.compra);
+  const venta = parseFloat(data.venta);
+  
+  blue = {
+    ...data,
+    avg: (compra + venta) / 2
+  };
 
-  let blue = data.find(item => item.casa.nombre === "Blue");
-
-  let compra = parseFloat(blue.casa.compra);
-  dolarBlueCompra.innerHTML = compra.toLocaleString('es-AR', { style: 'currency', currency: 'ARS' });
-
-  let venta = parseFloat(blue.casa.venta);
-  dolarBlueVenta.innerHTML = venta.toLocaleString('es-AR', { style: 'currency', currency: 'ARS' });
-
-  let dolarHoy = (compra + venta) / 2;
-
-  // Save the value of the dolar
-  dolarBlueValues = {
-    dolarBlueCompra: compra,
-    dolarBlueVenta: venta,
-    dolarBlue: dolarHoy
-  }
-
-  // Add the value of the dolar to the page
-  dolarBlue.innerHTML = dolarHoy.toLocaleString('es-AR', { style: 'currency', currency: 'ARS' });
-
-  // Add the value of the dolar to the window title
-  document.title += " | " + dolarHoy.toLocaleString('es-AR', { style: 'currency', currency: 'ARS' });
+  updatePage();
 }
 
 // Get the date of the last update
-async function getLastUpdate() {
-  const response = await fetch('https://www.dolarsi.com/api/api.php?type=ultima');
-  const data = await response.json();
+async function updatePage() {
+  textBlueAvg.innerHTML = blue.avg.toLocaleString('es-AR', { style: 'currency', currency: 'ARS' });
   
-  console.log(data);
+  document.title = "Dolar Blue | " + blue.avg.toLocaleString('es-AR', { style: 'currency', currency: 'ARS' });
+  
+  textBlueCompra.innerHTML = blue.compra.toLocaleString('es-AR', { style: 'currency', currency: 'ARS' });
+  
+  textBlueVenta.innerHTML = blue.venta.toLocaleString('es-AR', { style: 'currency', currency: 'ARS' });
 
-  let fecha = data[0].ultima.zona37.fecha;
-  let hora = data[0].ultima.zona37.hora;
-  console.log(fecha);
-  console.log(hora);
-
-  ultimaActualizacion.innerHTML = `Actualizado: ${fecha} - ${hora}`;
+  let fecha = new Date(blue.fechaActualizacion) || 'No disponible';
+  
+  ultimaActualizacion.innerHTML = `Actualizado: ${fecha.toLocaleDateString( 'es-AR')} - ${fecha.toLocaleTimeString('es-AR')}`;
 }
 
-getDolarHoy();
-getLastUpdate();
-
-let texts = [dolarBlue, dolarBlueCompra, dolarBlueVenta];
-
-texts.forEach(text => {
+[textBlueAvg, textBlueCompra, textBlueVenta].forEach(text => {
   text.addEventListener("click", function () {
-    navigator.clipboard.writeText(dolarBlueValues[text.id])
+    navigator.clipboard.writeText(blue[text.id])
     .then(() => {
       Swal.fire({
-        title: 'Copiado!',
+        title: `${blue[text.id]} copiado!`,
         icon: 'success',
         timer: 2000,
         timerProgressBar: true,
@@ -79,3 +64,18 @@ scrollArrow.addEventListener("click", function () {
     behavior: 'smooth'
   });
 });
+
+// Reload page
+reload.addEventListener("click", function () {
+  textBlueAvg.innerHTML = "Cargando...";
+  document.title = "Dolar Blue | Cargando...";
+  textBlueCompra.innerHTML = "Cargando...";
+  textBlueVenta.innerHTML = "Cargando...";
+  ultimaActualizacion.innerHTML = `Actualizado: Cargando...`;
+  // wait 1 second for suspense
+  setTimeout(() => {
+    getDolar();
+  }, 1000);
+});
+
+getDolar();

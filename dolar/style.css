@@ -120,11 +120,6 @@ body {
   }
 }
 
-#ultimaActualizacion {
-  font-size: 1rem;
-  color: hsl(97, 20%, 67%);
-}
-
 .mas-cotizaciones { 
   display: flex;
   flex-direction: column;
@@ -145,7 +140,6 @@ body {
   padding: 1rem;
   border-radius: 10px;
   font-size: 1.5rem;
-  cursor: pointer;
   transition: all 0.2s ease;
 }
 
@@ -173,6 +167,26 @@ body {
   display: grid;
   grid-template-rows: repeat(auto-fit, minmax(50px, 1fr));
   gap: 1rem;
+}
+
+.flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.date {
+  font-size: 1rem;
+  color: hsl(97, 20%, 67%);
+}
+
+#reload {
+  transform: rotate(90deg);
 }
 
 input {
