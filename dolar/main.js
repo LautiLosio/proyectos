@@ -19,7 +19,7 @@ async function getDolar() {
     compra: compra,
     venta: venta,
     fechaActualizacion: data.fecha,
-    avg: ((compra + venta) / 2).toFixed(2)
+    avg: (compra + venta) / 2
   }
 
   updatePage();
@@ -27,14 +27,12 @@ async function getDolar() {
 
 // Get the date of the last update
 async function updatePage() {
-  textBlueAvg.innerHTML = blue.avg.toLocaleString('es-AR', { style: 'currency', currency: 'ARS' });
-  
   document.title = "Dolar Blue | " + blue.avg.toLocaleString('es-AR', { style: 'currency', currency: 'ARS' });
   
+  textBlueAvg.innerHTML = blue.avg.toLocaleString('es-AR', { style: 'currency', currency: 'ARS' });
   textBlueCompra.innerHTML = blue.compra.toLocaleString('es-AR', { style: 'currency', currency: 'ARS' });
-  
   textBlueVenta.innerHTML = blue.venta.toLocaleString('es-AR', { style: 'currency', currency: 'ARS' });
-
+  
   let fecha = new Date(blue.fechaActualizacion) || 'No disponible';
   
   ultimaActualizacion.innerHTML = `Actualizado: ${fecha.toLocaleDateString( 'es-AR')} - ${fecha.toLocaleTimeString('es-AR')}`;
