@@ -15,7 +15,12 @@ async function getDolar() {
   const compra = parseFloat(data.compra);
   const venta = parseFloat(data.venta);
   
-  blue.avg = ((compra + venta) / 2).toFixed(2);
+  blue = {
+    compra: compra,
+    venta: venta,
+    fechaActualizacion: data.fecha,
+    avg: ((compra + venta) / 2).toFixed(2)
+  }
 
   updatePage();
 }
