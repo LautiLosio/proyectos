@@ -79,3 +79,8 @@ reload.addEventListener("click", function () {
 });
 
 getDolar();
+
+// auto reload page every 30 minutes
+setInterval(() => {
+  getDolar();
+}, 1800000);
